@@ -15,7 +15,7 @@ export class SocketService {
       key: 'lifePlants09123',
       cluster: 'mt1',
       encrypted: true,
-      wsHost: window.location.hostname,
+      wsHost: '18.227.105.11',
       wsPort: 6001,
       disableStats: true,
       forceTLS: false,
