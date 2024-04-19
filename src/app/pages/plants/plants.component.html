@@ -1,0 +1,75 @@
+<div *ngIf="msg" class="alert alert-success" role="alert">
+    {{msg}}
+</div>
+<div *ngIf="error" class="alert alert-danger" role="alert">
+    {{error}}
+</div>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card border-primary shadow">
+                <div class="card-body">
+                    <h1 class="card-title text-primary">Plantas</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3 justify-content-center">
+        <div class="col-md-6 text-center">
+            <button class="btn btn-primary" (click)="filterPlants('all')">Todos</button>
+            <button class="btn btn-success" (click)="filterPlants('active')">Activos</button>
+            <button class="btn btn-danger" (click)="filterPlants('inactive')">Inactivos</button>
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#addPlant">Agregar Planta</button>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row" *ngIf="plants.data.length; else noPlants;">
+            <div class="col-md-4" *ngFor="let plant of plants.data; let i = index">
+                <ng-container *ngIf="filteredPlants=='all' || (filteredPlants == 'active' && plant.status == 1 || (filteredPlants=='inactive' && plant.status != 1))">
+                <div class="card md-3" [ngClass]="{'border-primary': plant.status == 1, 'border-danger': plant.status != 1}" style="width: 18rem;">
+                    <img [src]="srcImg[i]" class="card-img-top IconPlant" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">{{plant.plant}}</h5>
+                      <p class="card-text">Estado: {{plant.status == 1 ? 'Activo' : 'Inactivo'}}</p>
+                    <button class="btn add" type="button" [routerLink]="['/lifeplants/plant',plant.id]">
+                        Ver
+                    </button>
+                    </div>
+                  </div>
+                </ng-container>
+            </div>
+        </div>
+        <ng-template #noPlants>
+            <div class="row justify-content-center">
+                <div class="col-md-6 text-center">
+                    <h3>No hay plantas para mostrar.</h3>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+    
+    <app-modal [modalId]="'addPlant'" [modalTitle]="'Agrega una planta'">
+        <form [formGroup]="plantForm" (ngSubmit)="addPlant()">
+            <div class="mb-3">
+                <label for="plant" class="form-label">Nombre de la planta</label>
+                <input type="text" class="form-control" id="plant" formControlName="plant" >
+                <div class="text-danger" *ngIf="plantForm.controls['plant'].invalid && (plantForm.controls['plant'].dirty || plantForm.controls['plant'].touched)">
+                    <div *ngIf="plantForm.controls['plant'].errors?.['required']">
+                        Este campo es requerido.
+                    </div>
+                    <div *ngIf="plantForm.controls['plant'].errors?.['minlength']">
+                        El nombre de la planta debe tener al menos 3 caracteres.
+                    </div>
+                    <div *ngIf="plantForm.controls['plant'].errors?.['maxlength']">
+                        El nombre de la planta no puede tener más de 50 caracteres.
+                    </div>
+                    <div *ngIf="plantForm.controls['plant'].errors?.['pattern']">
+                        El nombre de la planta solo puede contener letras, números y espacios.
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="plantForm.invalid">Agregar</button>
+        </form>
+    </app-modal>

@@ -1,0 +1,40 @@
+<app-no-login-nav-bar></app-no-login-nav-bar>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header text-white text-center">
+                    <h3>Registro</h3>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="inputNombre" class="form-label">Nombre</label>
+                            <input type="name" class="form-control" id="inputNombre" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputEmail" class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" id="inputEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputPassword" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control" id="inputPassword" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
+                            <input type="password" class="form-control" id="password_confirmation" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="checkbox" class="form-check-input" id="showPassword">
+                            <label for="showPassword" class="form-check-label">Mostrar contraseña</label>
+                        </div>
+                        <button type="submit" class="btn text-white w-100">Registrarse</button>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p>¿Ya tienes una cuenta? <a routerLink="/login">Iniciar sesión</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

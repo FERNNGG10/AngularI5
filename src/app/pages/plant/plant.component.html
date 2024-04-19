@@ -1,0 +1,150 @@
+<div *ngIf="msg" class="alert alert-success" role="alert">
+    {{msg}}
+</div>
+   
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-md-6">
+            <div class="card border-primary shadow">
+                <div class="card-body text-center">
+                    <img [src]="img" alt="" class="IconPlant mx-auto d-block">
+                    <h1 class="card-title text-primary">{{plantShow?.data?.plant}}</h1>
+                    <h2 [ngClass]="{'text-success': plantShow?.data?.status == 1, 'text-danger': plantShow?.data?.status != 1}">
+                        {{plantShow?.data?.status == 1 ? 'Activo' : 'Inactivo'}}
+                    </h2>
+                </div>
+                <div class="card-footer text-center">
+                    <button class="btn add" type="button" (click)="regar()" [disabled]="!buttonActive">Regar</button>
+                    <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#putPlant" (click)="editModal(plantShow?.data?.id, plantShow?.data?.plant, plantShow?.data?.status)"><i class="bi bi-pencil-fill"></i></button>
+                    <button *ngIf="plantShow?.data?.status == 1" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deletePlant" (click)="openModal(plantShow?.data?.id)">Desactivar</button>
+                    <button *ngIf="plantShow?.data?.status != 1" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#deletePlant" (click)="openModal(plantShow?.data?.id)">Activar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if(plantShow?.data?.status == 1){
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <!-- Agua -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/raindrops-310146_1280.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Agua</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Agua?.Valor}} {{data_sensor?.data?.Agua?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Agua?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>        
+            <!-- Temperatura -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/temp.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Temperatura</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Temperatura?.Valor}} {{data_sensor?.data?.Temperatura?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Temperatura?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Humedad -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/hum.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Humedad</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Humedad?.Valor}} {{data_sensor?.data?.Humedad?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Humedad?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Lluvia -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/lluvia.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Lluvia</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Lluvia?.Valor}} {{data_sensor?.data?.Lluvia?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Lluvia?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Suelo -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/suelo.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Suelo</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Suelo?.Valor}} {{data_sensor?.data?.Suelo?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Suelo?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Luz -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/luz.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Luz</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Luz?.Valor}} {{data_sensor?.data?.Luz?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Luz?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Movimiento -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/mov.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Movimiento</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Movimiento?.Valor}} {{data_sensor?.data?.Movimiento?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Movimiento?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Vibracion -->
+            <div class="col-md-2 mb-4">
+                <div class="card border-primary shadow">
+                    <div class="card-body d-flex flex-column align-items-center"> <!-- Añadido 'd-flex flex-column align-items-center' -->
+                        <img src="../../assets/imagenes/vibr.png" alt="" class="sensorIcon">
+                        <h5 class="card-title text-primary">Vibracion</h5>
+                        <p class="card-text">Valor: {{data_sensor?.data?.Vibracion?.Valor}} {{data_sensor?.data?.Vibracion?.Unidad}}</p>
+                        <p class="card-text">Fecha: {{data_sensor?.data?.Vibracion?.Fecha}}</p>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+}
+
+<app-modal [modalId]="'deletePlant'" [modalTitle]="plantShow?.data?.status == 1 ? 'Desactivar planta' : 'Activar planta'">
+    <p>¿Estás seguro de {{plantShow?.data?.status == 1 ? 'desactivar' : 'activar'}} la planta?</p>
+    <button class="btn" [ngClass]="{'btn-danger': plantShow?.data?.status == 1, 'btn-success': plantShow?.data?.status != 1}" type="button" (click)="deletePlant(id)" data-bs-dismiss="modal">{{plantShow?.data?.status == 1 ? 'Desactivar' : 'Activar'}}</button>
+    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+</app-modal>
+<app-modal [modalId]="'putPlant'" [modalTitle]="'Editar planta'">
+    <form [formGroup]="putPlantForm" (ngSubmit)="editPlant(id)">
+        <div class="mb-3">
+            <label for="plant" class="form-label">Planta</label>
+            <input type="text" class="form-control" id="plant" formControlName="plant" name="plantPut" required>
+            <div class="text-danger" *ngIf="putPlantForm.controls['plant']?.invalid && (putPlantForm.controls['plant']?.dirty || putPlantForm.controls['plant']?.touched)">
+                <div *ngIf="putPlantForm.controls['plant']?.errors?.['required']">Planta es requerida</div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-control" id="status" formControlName="status" name="status" required>
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <div class="text-danger" *ngIf="putPlantForm.controls['status']?.invalid && (putPlantForm.controls['status']?.dirty || putPlantForm.controls['status']?.touched)">
+                <div *ngIf="putPlantForm.controls['status']?.errors?.['required']">Status es requerido</div>
+            </div>
+        </div>         
+        <button type="submit" class="btn add" [disabled]="!putPlantForm.valid" data-bs-dismiss="modal">Editar</button>
+    </form>
+</app-modal>

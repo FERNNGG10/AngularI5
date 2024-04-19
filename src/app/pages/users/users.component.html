@@ -1,0 +1,70 @@
+<!-- <div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 text-center">
+            <div class="card border-primary shadow">
+                <div class="card-body">
+                    <h1 class="card-title text-primary">Usuarios</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card border shadow">
+                <div class="card-body">
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn add" type="button" data-bs-toggle="modal" data-bs-target="#postUser">
+                        <i class="bi bi-person"></i> Agregar usuario
+                    </button>
+                </div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary" (click)="filterUsers('all')">Todos</button>
+                <button type="button" class="btn btn-success" (click)="filterUsers('active')">Activos</button>
+                <button type="button" class="btn btn-danger" (click)="filterUsers('inactive')">Inactivos</button>
+              </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="users.data.length === 0">
+                                <tr>
+                                    <td colspan="4" class="text-center">No hay usuarios</td>
+                                </tr>
+                            </ng-container>
+                            
+                            <tr *ngFor="let user of users.data">
+                                <ng-container *ngIf="userfilter=='all' || (userfilter == 'active' && user.status == 1 || (userfilter=='inactive' && user.status != 1))">
+                                <td>{{user.name}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.status == 1 ? 'Activo' : 'Inactivo'}}</td>
+                                <td>
+                                    <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#putUser" (click)="editModal(user.id, user.name, user.email, user.status)">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button class="btn btn-danger" type="button"  data-bs-toggle="modal" data-bs-target="#deleteUser" (click)="openModal(user.id)">
+                                        <i class="bi bi-trash-fill"></i>
+                                    </button>
+                                </td>
+                                </ng-container>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div> -->
