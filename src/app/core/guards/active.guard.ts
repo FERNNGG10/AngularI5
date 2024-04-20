@@ -13,19 +13,16 @@ export class activeGuard implements CanActivate{
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       return this.auth.checkActive().pipe(
         map(response => {
-          if(response.body === 1){
+          if (response === 1) {
             return true;
           }
-          else if(response.body === 0){
-            localStorage.removeItem('token');
-            localStorage.removeItem('userEmail');
+         
             this.router.navigate(['/login']);
             return false;
-          }
-          return false;
+          
         }),
         catchError(error => {
-          console.log(error);
+          console.error(error);
           this.router.navigate(['/login']);
           return of(false);
         })
