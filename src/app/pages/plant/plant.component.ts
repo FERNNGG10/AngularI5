@@ -8,6 +8,8 @@ import { ModalComponent } from '../../components/modal/modal.component';
 import { PlantsService } from '../../services/plants.service';
 import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
+import Socket from 'pusher-js/types/src/core/socket';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-plant',
@@ -26,7 +28,7 @@ export class PlantComponent implements OnInit{
   img= '';
   msg=''
   buttonActive = true;
-  constructor(private plantService:PlantsService,private router:Router,private formBuilder:FormBuilder) {
+  constructor(private plantService:PlantsService,private router:Router,private formBuilder:FormBuilder,private mongo:SocketService) {
     this.putPlantForm = this.formBuilder.group({
       plant: [this.putPlant.plant, [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9 ]+$/)]],
       status: [this.putPlant.status, [Validators.required, Validators.min(0), Validators.max(1)]]
@@ -43,10 +45,20 @@ export class PlantComponent implements OnInit{
       },(error)=>{
         console.log(error);
       });
+
+      this.mongo.MongoData().subscribe((response)=>{
+        console.log(response);
+        this.data_sensor = response;
+      },(error)=>{
+        console.log(error);
+      });
+      this.websocket();
     }
     this.img = this.getImg(); 
-    this.websocket();
+    
   }
+
+
 
   getImg(){
     const numero = Math.floor(Math.random() * 5) + 1;
@@ -102,7 +114,8 @@ export class PlantComponent implements OnInit{
       key: 'lifePlants09123',
       cluster: 'mt1',
       encrypted: true,
-      wsHost: window.location.hostname,
+      //wsHost: window.location.hostname,
+      wsHost: '18.227.105.11',
       wsPort: 6001,
       disableStats: true,
       forceTLS: false,

@@ -35,4 +35,12 @@ export class PlantsService {
   eliminarPlants(id:number){
     return this.http.delete<any>(`${environment.UrlPlants}/destroy/${id}`);
   }
+
+  getPlantsActive():Observable<PlantIndexInterface>{
+    return this.http.get<PlantIndexInterface>(`${environment.UrlPlants}/active`);
+  }
+
+  getPlantsInactive():Observable<PlantIndexInterface>{
+    return this.http.get<PlantIndexInterface>(`${environment.UrlPlants}/inactive`);
+  }
 }
