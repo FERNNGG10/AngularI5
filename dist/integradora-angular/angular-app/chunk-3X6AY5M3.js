@@ -1,1 +1,0 @@
-import{La as s,Ma as r,Xa as i,Y as o,ab as a}from"./chunk-SYTZFNVP.js";var d=(()=>{let e=class e{};e.\u0275fac=function(n){return new(n||e)},e.\u0275cmp=o({type:e,selectors:[["app-sensors"]],standalone:!0,features:[a],decls:2,vars:0,template:function(n,c){n&1&&(s(0,"p"),i(1,"sensors works!"),r())}});let t=e;return t})();export{d as SensorsComponent};
