@@ -18,7 +18,8 @@ export class RegisterComponent {
   registerForm:FormGroup
   showPassword=false;
   errors = {name:'',email:'',password:''}
-  msg=''
+  msg=''  
+  errorsV=false;
   buttonDisabled = false;
   public registerData:RegisterDataInterface={name:'',email:'',password:'',password_confirmation:''};
 
@@ -44,13 +45,13 @@ export class RegisterComponent {
         },2500);
 
       },(error)=>{
-        
+        this.errorsV=true;
         console.log(error);
         this.errors.password = error.error.errors.password
         this.errors.email = error.error.errors.email
         this.errors.name = error.error.errors.name
         setTimeout(() => {
-         
+          this.errorsV = false;
           this.errors = {name:'',email:'',password:''};
         }, 3000);
       });
