@@ -182,36 +182,36 @@
 
 
     <app-modal [modalId]="'putUser'" [modalTitle]="'Editar usuario'">
-        <form [formGroup]="UpdateUserForm">
+        <form >
         
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="name" name="name" formControlName="name" placeholder="Nombre" required>
-                <div class="text-danger" *ngIf="UpdateUserForm.controls['name'].invalid && (UpdateUserForm.controls['name'].dirty || UpdateUserForm.controls['name'].touched)">
+                <!-- <div class="text-danger" *ngIf="UpdateUserForm.controls['name'].invalid && (UpdateUserForm.controls['name'].dirty || UpdateUserForm.controls['name'].touched)">
                     <div *ngIf="UpdateUserForm.controls['name'].errors?.['required']">El nombre es requerido</div>
                     <div *ngIf="UpdateUserForm.controls['name'].errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
                     <div *ngIf="UpdateUserForm.controls['name'].errors?.['maxlength']">El nombre no puede tener más de 30 caracteres</div>
-                </div>
+                </div> -->
             </div>
    
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="Email" required>
-                <div class="text-danger" *ngIf="UpdateUserForm.controls['email'].invalid && (UpdateUserForm.controls['email'].dirty || UpdateUserForm.controls['email'].touched)">
+                <!-- <div class="text-danger" *ngIf="UpdateUserForm.controls['email'].invalid && (UpdateUserForm.controls['email'].dirty || UpdateUserForm.controls['email'].touched)">
                     <div *ngIf="UpdateUserForm.controls['email'].errors?.['required']">El correo electrónico es requerido</div>
                     <div *ngIf="UpdateUserForm.controls['email'].errors?.['email']">El correo electrónico debe ser válido</div>
                     <div *ngIf="UpdateUserForm.controls['email'].errors?.['pattern']">El correo electrónico debe seguir el patrón especificado</div>
-                </div>
+                </div> -->
             </div>
         
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" formControlName="password" placeholder="Contraseña" required>
-                <div class="text-danger" *ngIf="UpdateUserForm.controls['password'].invalid && (UpdateUserForm.controls['password'].dirty || UpdateUserForm.controls['password'].touched)">
+                <!-- <div class="text-danger" *ngIf="UpdateUserForm.controls['password'].invalid && (UpdateUserForm.controls['password'].dirty || UpdateUserForm.controls['password'].touched)">
                     <div *ngIf="UpdateUserForm.controls['password'].errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</div>
                     <div *ngIf="UpdateUserForm.controls['password'].errors?.['maxlength']">La contraseña no puede tener más de 230 caracteres</div>
                     <div *ngIf="UpdateUserForm.controls['password'].errors?.['pattern']">La contraseña debe seguir el patrón especificado</div>
-                </div>
+                </div> -->
             </div>
        
             <div class="mb-3">
@@ -220,10 +220,10 @@
                     <option value="1">Activo</option>
                     <option value="0">Inactivo</option>
                 </select>
-                <div class="text-danger" *ngIf="UpdateUserForm.controls['status'].invalid && (UpdateUserForm.controls['status'].dirty || UpdateUserForm.controls['status'].touched)">
+                <!-- <div class="text-danger" *ngIf="UpdateUserForm.controls['status'].invalid && (UpdateUserForm.controls['status'].dirty || UpdateUserForm.controls['status'].touched)">
                     <div *ngIf="UpdateUserForm.controls['status'].errors?.['required']">El status es requerido</div>
                     <div *ngIf="UpdateUserForm.controls['status'].errors?.['pattern']">El status debe ser 0 o 1</div>
-                </div>
+                </div> -->
             </div>
          
             <div class="mb-3">
@@ -231,13 +231,13 @@
                 <select class="form-select" id="rol_id" name="rol_id" formControlName="rol_id" required>
                     <option *ngFor="let rol of roles.data" [value]="rol.id">{{rol.rol}}</option>
                 </select>
-                <div class="text-danger" *ngIf="UpdateUserForm.controls['rol_id'].invalid && (UpdateUserForm.controls['rol_id'].dirty || UpdateUserForm.controls['rol_id'].touched)">
+                <!-- <div class="text-danger" *ngIf="UpdateUserForm.controls['rol_id'].invalid && (UpdateUserForm.controls['rol_id'].dirty || UpdateUserForm.controls['rol_id'].touched)">
                     <div *ngIf="UpdateUserForm.controls['rol_id'].errors?.['required']">El Rol ID es requerido</div>
                     <div *ngIf="UpdateUserForm.controls['rol_id'].errors?.['pattern']">El Rol ID debe ser un número</div>
-                </div>
+                </div> -->
             </div>
         
-            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="UpdateUserForm.invalid">Editar</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" >Editar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         </form>
     </app-modal>

@@ -29,7 +29,6 @@ export class UsersComponent implements OnInit{
   PostUserForm:FormGroup;
   msg=''
 
-  UpdateUserForm:FormGroup;
   id:number=0;
   errrorV=false;
   errors = {name:'',email:'',password:'',status:'',rol_id:''}
@@ -44,13 +43,7 @@ export class UsersComponent implements OnInit{
       rol_id: [1, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
     });
 
-    this.UpdateUserForm = this.formBuilde.group({
-      name: [this.userUpdate.name, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-      email: [this.userUpdate.email, [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      password: [this.userUpdate.password, [Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9 ]*$/),Validators.maxLength(230)]],
-      status: [this.userUpdate.status, [Validators.required, Validators.pattern(/^[0-1]{1}$/)]],
-      rol_id: [this.userUpdate.rol_id, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
-    });
+   
    }
 
   ngOnInit(): void {
@@ -109,7 +102,6 @@ export class UsersComponent implements OnInit{
     });
   }
 
-
   deleteUser() {
     this.userService.delete(this.id).subscribe((response) => {
       this.getUsers();
@@ -118,30 +110,24 @@ export class UsersComponent implements OnInit{
     });
   }
 
-  editModal(id: number) {
+  editModal(id:number){
     this.id = id;
-    console.log(this.id);
     this.userService.getUser(this.id).subscribe((response)=>{
       this.usershow = response;
-      this.userUpdate = {name:this.usershow.name,email:this.usershow.email,password:'',status:this.usershow.status,rol_id:this.usershow.rol_id};
-      console.log(this.usershow);
-      this.UpdateUserForm.patchValue({
-        name: this.userUpdate.name,
-        email: this.userUpdate.email,
-        password: this.userUpdate.password,
-        status: this.userUpdate.status,
-        rol_id: this.userUpdate.rol_id
-      });
+      this.userUpdate.name = this.usershow.name;
+      this.userUpdate.email = this.usershow.email;
+      this.userUpdate.status = this.usershow.status;
+      this.userUpdate.rol_id = this.usershow.rol_id;
+      console.log(this.userUpdate);
     },(error)=>{
       console.log(error);
     });
   }
 
+
   closemodal(){
     this.id = 0;
-    console.log(this.id);
-    this.usershow = {id:0,name:'',email:'',rol_id:0,status:0};
-    this.userUpdate = {name:'',email:'',password:'',status:0,rol_id:0};
+    
   }
   
   
