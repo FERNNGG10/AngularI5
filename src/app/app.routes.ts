@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { tokenGuard } from './core/guards/auth.guard';
 import { AdminGuard } from './core/guards/admin.guard';
 import { activeGuard } from './core/guards/active.guard';
+import { IsToken } from './core/guards/istoken.guard';
 
 export const routes: Routes = [
 
@@ -15,8 +16,8 @@ export const routes: Routes = [
         {path: 'perfil',loadComponent:()=>import('./pages/profile/profile.component').then(c => c.ProfileComponent),canActivate:[tokenGuard,activeGuard]},
         
     ]},
-    {path:'login',loadComponent:()=>import('./pages/login/login.component').then(c => c.LoginComponent)},
-    {path:'registro',loadComponent:()=>import('./pages/register/register.component').then(c => c.RegisterComponent)},
+    {path:'login',loadComponent:()=>import('./pages/login/login.component').then(c => c.LoginComponent),canActivate:[IsToken]},
+    {path:'registro',loadComponent:()=>import('./pages/register/register.component').then(c => c.RegisterComponent),canActivate:[IsToken]},
     {path:'',redirectTo:'/login',pathMatch:'full'},
     {path: '**', loadComponent:() => import('./pages/notfound/notfound.component').then(m => m.NotfoundComponent)},
 ];
