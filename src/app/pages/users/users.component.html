@@ -1,4 +1,8 @@
-<!-- <div class="container mt-5">
+<!-- <div *ngIf="isError" class="{{alert}}" role="alert">
+    {{errormsg}}
+</div> -->
+
+<div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6 text-center">
             <div class="card border-primary shadow">
@@ -9,62 +13,202 @@
         </div>
     </div>
 
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card border shadow">
-                <div class="card-body">
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn add" type="button" data-bs-toggle="modal" data-bs-target="#postUser">
-                        <i class="bi bi-person"></i> Agregar usuario
-                    </button>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card border shadow">
+                    <div class="card-body">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn add" type="button" data-bs-toggle="modal" data-bs-target="#postUser">
+                                <i class="bi bi-person"></i> Agregar usuario
+                            </button>
+                        </div>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-primary" (click)="filterUsers('all')">Todos</button>
+                        <button type="button" class="btn btn-success" (click)="filterUsers('active')">Activos</button>
+                        <button type="button" class="btn btn-danger"
+                            (click)="filterUsers('inactive')">Inactivos</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="users.data.length === 0">
+                                        <tr>
+                                            <td colspan="4" class="text-center">No hay usuarios</td>
+                                        </tr>
+                                    </ng-container>
+
+                                    <tr *ngFor="let user of users.data">
+                                        <ng-container
+                                            *ngIf="userfilter=='all' || (userfilter == 'active' && user.status == 1 || (userfilter=='inactive' && user.status != 1))">
+                                            <td>{{user.name}}</td>
+                                            <td>{{user.email}}</td>
+                                            <td>{{user.status == 1 ? 'Activo' : 'Inactivo'}}</td>
+                                            <td>
+                                                <button class="btn btn-warning" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#putUser"
+                                                    (click)="editModal(user.id, user.name, user.email, user.status, user.rol_id)">
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                </button>
+                                                <button class="btn btn-danger" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#deleteUser" (click)="deleteModal(user.id)">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-primary" (click)="filterUsers('all')">Todos</button>
-                <button type="button" class="btn btn-success" (click)="filterUsers('active')">Activos</button>
-                <button type="button" class="btn btn-danger" (click)="filterUsers('inactive')">Inactivos</button>
-              </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Email</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <ng-container *ngIf="users.data.length === 0">
-                                <tr>
-                                    <td colspan="4" class="text-center">No hay usuarios</td>
-                                </tr>
-                            </ng-container>
-                            
-                            <tr *ngFor="let user of users.data">
-                                <ng-container *ngIf="userfilter=='all' || (userfilter == 'active' && user.status == 1 || (userfilter=='inactive' && user.status != 1))">
-                                <td>{{user.name}}</td>
-                                <td>{{user.email}}</td>
-                                <td>{{user.status == 1 ? 'Activo' : 'Inactivo'}}</td>
-                                <td>
-                                    <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#putUser" (click)="editModal(user.id, user.name, user.email, user.status)">
-                                        <i class="bi bi-pencil-fill"></i>
-                                    </button>
-                                    <button class="btn btn-danger" type="button"  data-bs-toggle="modal" data-bs-target="#deleteUser" (click)="openModal(user.id)">
-                                        <i class="bi bi-trash-fill"></i>
-                                    </button>
-                                </td>
-                                </ng-container>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
         </div>
     </div>
-</div> -->
+
+
+
+    <app-modal [modalId]="'deleteUser'" [modalTitle]="'Eliminar usuario'">
+        <p>¿Estás seguro de desactivar al usuario?</p>
+        <button class="btn btn-danger" type="button" (click)="deleteUser()" data-bs-dismiss="modal">Eliminar</button>
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+    </app-modal>
+
+
+
+
+
+    <app-modal [modalId]="'postUser'" [modalTitle]="'Agregar usuario'">
+        <form [formGroup]="PostUserForm" (ngSubmit)="postUser()">
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" name="name" formControlName="name" placeholder="Nombre" required>
+                <div class="text-danger" *ngIf="PostUserForm.controls['name'].invalid && (PostUserForm.controls['name'].dirty || PostUserForm.controls['name'].touched)">
+                    <div *ngIf="PostUserForm.controls['name'].errors?.['required']">El nombre es requerido</div>
+                    <div *ngIf="PostUserForm.controls['name'].errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
+                    <div *ngIf="PostUserForm.controls['name'].errors?.['maxlength']">El nombre no puede tener más de 30 caracteres</div>
+                </div>
+            </div>
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="Email" required>
+                <div class="text-danger" *ngIf="PostUserForm.controls['email'].invalid && (PostUserForm.controls['email'].dirty || PostUserForm.controls['email'].touched)">
+                    <div *ngIf="PostUserForm.controls['email'].errors?.['required']">El correo electrónico es requerido</div>
+                    <div *ngIf="PostUserForm.controls['email'].errors?.['email']">El correo electrónico debe ser válido</div>
+                    <div *ngIf="PostUserForm.controls['email'].errors?.['pattern']">El correo electrónico debe seguir el patrón especificado</div>
+                </div>
+            </div>
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" formControlName="password" placeholder="Contraseña" required>
+                <div class="text-danger" *ngIf="PostUserForm.controls['password'].invalid && (PostUserForm.controls['password'].dirty || PostUserForm.controls['password'].touched)">
+                    <div *ngIf="PostUserForm.controls['password'].errors?.['required']">La contraseña es requerida</div>
+                    <div *ngIf="PostUserForm.controls['password'].errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</div>
+                    <div *ngIf="PostUserForm.controls['password'].errors?.['maxlength']">La contraseña no puede tener más de 230 caracteres</div>
+                    <div *ngIf="PostUserForm.controls['password'].errors?.['pattern']">La contraseña debe seguir el patrón especificado</div>
+                </div>
+            </div>
+            <!-- Status -->
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status" formControlName="status" required>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <div class="text-danger" *ngIf="PostUserForm.controls['status'].invalid && (PostUserForm.controls['status'].dirty || PostUserForm.controls['status'].touched)">
+                    <div *ngIf="PostUserForm.controls['status'].errors?.['required']">El status es requerido</div>
+                    <div *ngIf="PostUserForm.controls['status'].errors?.['pattern']">El status debe ser 0 o 1</div>
+                </div>
+            </div>
+            <!-- Rol ID -->
+            <div class="mb-3">
+                <label for="rol_id" class="form-label">Rol ID</label>
+                <input type="number" class="form-control" id="rol_id" name="rol_id" formControlName="rol_id" placeholder="Rol ID" required>
+                <div class="text-danger" *ngIf="PostUserForm.controls['rol_id'].invalid && (PostUserForm.controls['rol_id'].dirty || PostUserForm.controls['rol_id'].touched)">
+                    <div *ngIf="PostUserForm.controls['rol_id'].errors?.['required']">El Rol ID es requerido</div>
+                    <div *ngIf="PostUserForm.controls['rol_id'].errors?.['pattern']">El Rol ID debe ser un número</div>
+                </div>
+            </div>
+            <!-- ... -->
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="PostUserForm.invalid">Agregar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </form>
+    </app-modal>
+
+
+
+
+
+    <app-modal [modalId]="'putUser'" [modalTitle]="'Editar usuario'">
+        <form [formGroup]="UpdateUserForm" (ngSubmit)="updateUser()">
+            <!-- Name -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" name="name" formControlName="name" placeholder="Nombre" required>
+                <div class="text-danger" *ngIf="UpdateUserForm.controls['name'].invalid && (UpdateUserForm.controls['name'].dirty || UpdateUserForm.controls['name'].touched)">
+                    <div *ngIf="UpdateUserForm.controls['name'].errors?.['required']">El nombre es requerido</div>
+                    <div *ngIf="UpdateUserForm.controls['name'].errors?.['minlength']">El nombre debe tener al menos 3 caracteres</div>
+                    <div *ngIf="UpdateUserForm.controls['name'].errors?.['maxlength']">El nombre no puede tener más de 30 caracteres</div>
+                </div>
+            </div>
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="Email" required>
+                <div class="text-danger" *ngIf="UpdateUserForm.controls['email'].invalid && (UpdateUserForm.controls['email'].dirty || UpdateUserForm.controls['email'].touched)">
+                    <div *ngIf="UpdateUserForm.controls['email'].errors?.['required']">El correo electrónico es requerido</div>
+                    <div *ngIf="UpdateUserForm.controls['email'].errors?.['email']">El correo electrónico debe ser válido</div>
+                    <div *ngIf="UpdateUserForm.controls['email'].errors?.['pattern']">El correo electrónico debe seguir el patrón especificado</div>
+                </div>
+            </div>
+            <!-- Password -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input type="password" class="form-control" id="password" name="password" formControlName="password" placeholder="Contraseña" required>
+                <div class="text-danger" *ngIf="UpdateUserForm.controls['password'].invalid && (UpdateUserForm.controls['password'].dirty || UpdateUserForm.controls['password'].touched)">
+                    <div *ngIf="UpdateUserForm.controls['password'].errors?.['minlength']">La contraseña debe tener al menos 8 caracteres</div>
+                    <div *ngIf="UpdateUserForm.controls['password'].errors?.['maxlength']">La contraseña no puede tener más de 230 caracteres</div>
+                    <div *ngIf="UpdateUserForm.controls['password'].errors?.['pattern']">La contraseña debe seguir el patrón especificado</div>
+                </div>
+            </div>
+            <!-- Status -->
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status" formControlName="status" required>
+                    <option value="1">Activo</option>
+                    <option value="0">Inactivo</option>
+                </select>
+                <div class="text-danger" *ngIf="UpdateUserForm.controls['status'].invalid && (UpdateUserForm.controls['status'].dirty || UpdateUserForm.controls['status'].touched)">
+                    <div *ngIf="UpdateUserForm.controls['status'].errors?.['required']">El status es requerido</div>
+                    <div *ngIf="UpdateUserForm.controls['status'].errors?.['pattern']">El status debe ser 0 o 1</div>
+                </div>
+            </div>
+            <!-- Rol ID -->
+            <div class="mb-3">
+                <label for="rol_id" class="form-label">Rol ID</label>
+                <input type="number" class="form-control" id="rol_id" name="rol_id" formControlName="rol_id" placeholder="Rol ID" required>
+                <div class="text-danger" *ngIf="UpdateUserForm.controls['rol_id'].invalid && (UpdateUserForm.controls['rol_id'].dirty || UpdateUserForm.controls['rol_id'].touched)">
+                    <div *ngIf="UpdateUserForm.controls['rol_id'].errors?.['required']">El Rol ID es requerido</div>
+                    <div *ngIf="UpdateUserForm.controls['rol_id'].errors?.['pattern']">El Rol ID debe ser un número</div>
+                </div>
+            </div>
+            <!-- ... -->
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="UpdateUserForm.invalid">Editar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </form>
+    </app-modal>

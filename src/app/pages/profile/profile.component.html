@@ -1,1 +1,49 @@
-<p>profile works!</p>
+<div *ngIf="msg" class="alert alert-success" role="alert">
+    {{msg}}
+</div>
+<div *ngIf="errors.password" class="alert alert-danger" role="alert">
+    {{errors.password}}
+</div>
+
+<div class="profile-container">
+    <div class="profile-picture">
+        <img src="../../assets/imagenes/gato.png" alt="Profile Picture" />
+    </div>
+    <div class="profile-details">
+        <h2>{{MeResponse.name}}</h2>
+        <p>Plantas que tengo:<span id="plant-count"> {{MeResponse.plant_count}}</span></p>
+        <button id="change-password" data-bs-toggle="modal" data-bs-target="#CambiarContraseña">Cambiar
+            Contraseña</button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="CambiarContraseña" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Cambia tu contraseña</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="ChangePasswordForm" (ngSubmit)="changePassword()" >
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" formControlName="password">
+                        <div *ngIf="ChangePasswordForm.controls['password'].invalid && (ChangePasswordForm.controls['password'].dirty || ChangePasswordForm.controls['password'].touched)" class="text-danger">
+                            <div *ngIf="ChangePasswordForm.controls['password'].errors?.['required']">La contraseña es requerida</div>
+                            <div *ngIf="ChangePasswordForm.controls['password'].errors?.['minLength']">La contraseña debe tener al menos 8 caracteres</div>
+                            <div *ngIf="ChangePasswordForm.controls['password'].errors?.['pattern']">La contraseña debe ser alfanumérica</div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="ChangePasswordForm.invalid">Guardar cambios</button>
+                        </div>
+                    </div>
+                </form>
+                
+            </div>
+            
+        </div>
+    </div>
+</div>

@@ -12,7 +12,7 @@ export const routes: Routes = [
         {path: 'plant/:id', loadComponent:() => import('./pages/plant/plant.component').then(c => c.PlantComponent), canActivate: [tokenGuard,activeGuard]},
         {path: 'users',loadComponent:()=>import('./pages/users/users.component').then(c => c.UsersComponent),canActivate:[tokenGuard,AdminGuard,activeGuard]},  
         {path: 'about',loadComponent:()=>import('./pages/about/about.component').then(c => c.AboutComponent),canActivate:[tokenGuard,activeGuard]},
-
+        {path: 'perfil',loadComponent:()=>import('./pages/profile/profile.component').then(c => c.ProfileComponent),canActivate:[tokenGuard,activeGuard]},
         
     ]},
     {path:'login',loadComponent:()=>import('./pages/login/login.component').then(c => c.LoginComponent)},

@@ -8,6 +8,7 @@ import { CodeResponseInterface } from '../interfaces/CodeResponse.Interface';
 import { RegisterDataInterface } from '../interfaces/RegisterData.Interface';
 import { RegisterResponseInterface } from '../interfaces/RegisterResponse.interface';
 import { MeResponseInterface } from '../interfaces/MeResponse.Interface';
+import { MsgInterface } from '../interfaces/Msg.Interface';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,10 @@ export class AuthService {
 
   checkroleevent():Observable<any>{
     return this.http.get<any>(`${environment.UrlAuth}/socketrol`);
+  }
+
+  changepassword(data:any):Observable<MsgInterface>{
+    return this.http.post<MsgInterface>(`${environment.UrlAuth}/changepassword`,data);
   }
 
   
