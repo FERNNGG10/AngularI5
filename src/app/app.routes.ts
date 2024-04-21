@@ -10,7 +10,7 @@ export const routes: Routes = [
         {path: 'home', loadComponent:() => import('./pages/home/home.component').then(c => c.HomeComponent), canActivate: [activeGuard,tokenGuard]},
         {path: 'plants', loadComponent:() => import('./pages/plants/plants.component').then(c => c.PlantsComponent), canActivate: [tokenGuard,activeGuard]},
         {path: 'plant/:id', loadComponent:() => import('./pages/plant/plant.component').then(c => c.PlantComponent), canActivate: [tokenGuard,activeGuard]},
-        {path: 'users',loadComponent:()=>import('./pages/users/users.component').then(c => c.UsersComponent),canActivate:[tokenGuard,activeGuard,AdminGuard]},  
+        {path: 'users',loadComponent:()=>import('./pages/users/users.component').then(c => c.UsersComponent),canActivate:[tokenGuard,AdminGuard,activeGuard]},  
         {path: 'about',loadComponent:()=>import('./pages/about/about.component').then(c => c.AboutComponent),canActivate:[tokenGuard,activeGuard]},
 
         

@@ -36,6 +36,10 @@ export class SocketService {
     return this.http.get<MongoInterface>(`${environment.UrlMongo}/last`);
   }
 
+  BombEvent():Observable<any>{
+    return this.http.post<any>(`${environment.UrlMongo}/bomb`,{});
+  }
+
   closeWebSocket() {
     if (this.echo) {
       this.echo.disconnect();

@@ -99,7 +99,13 @@ export class PlantComponent implements OnInit{
   }
 
   regar() {
-    
+    this.mongo.BombEvent().subscribe((response) => {
+      console.log(response);
+      this.msg = response.msg;
+      setTimeout(() => {
+        this.msg = '';
+      }, 3000);
+    });
     this.buttonActive = false;
     setTimeout(() => {
       this.buttonActive = true;
