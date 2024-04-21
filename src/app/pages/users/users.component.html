@@ -128,6 +128,16 @@
                     <div *ngIf="PostUserForm.controls['password'].errors?.['pattern']">La contraseña debe seguir el patrón especificado</div>
                 </div>
             </div>
+            <div class="mb3">
+                <label for="password_confirmation" class="form-label">Confirmar contraseña</label>
+                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" formControlName="password_confirmation" placeholder="Confirmar contraseña" required>
+                <div class="text-danger" *ngIf="PostUserForm.controls['password_confirmation'].invalid && (PostUserForm.controls['password_confirmation'].dirty || PostUserForm.controls['password_confirmation'].touched)">
+                    <div *ngIf="PostUserForm.controls['password_confirmation'].errors?.['required']">La confirmación de la contraseña es requerida</div>
+                    <div *ngIf="PostUserForm.controls['password_confirmation'].errors?.['minlength']">La confirmación de la contraseña debe tener al menos 8 caracteres</div>
+                    <div *ngIf="PostUserForm.controls['password_confirmation'].errors?.['maxlength']">La confirmación de la contraseña no puede tener más de 230 caracteres</div>
+                    <div *ngIf="PostUserForm.controls['password_confirmation'].errors?.['pattern']">La confirmación de la contraseña debe seguir el patrón especificado</div>
+                </div>
+            </div>
             <!-- Status -->
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
