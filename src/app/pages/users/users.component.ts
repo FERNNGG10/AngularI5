@@ -57,6 +57,10 @@ export class UsersComponent implements OnInit{
    update(){
       this.userService.updateUser(this.id,this.UpdateUserForm.value).subscribe((response)=>{
         console.log(response);
+        this.msg = response.msg;  
+        setTimeout(() => {
+          this.msg = '';
+        }, 3000);
         this.getUsers();
         this.id = 0;
       },(error)=>{
