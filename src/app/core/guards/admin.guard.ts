@@ -14,7 +14,7 @@ export class AdminGuard implements CanActivate{
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       return this.auth.checkRol().pipe(map(response => {
-        if (response.rol_id === 2) {
+        if (response === 2) {
             return true;
         } else {
             this.router.navigate(['/lifeplants/home']);
