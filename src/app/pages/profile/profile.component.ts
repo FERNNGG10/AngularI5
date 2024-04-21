@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit{
   errors = {password:''}
   constructor(private authService:AuthService,private formBuilder:FormBuilder) {
     this.ChangePasswordForm = this.formBuilder.group({
-      password: [this.ChangePasswordData.password, [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/),Validators.maxLength(230)]]
+      password: [this.ChangePasswordData.password, [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9 ]*$/),Validators.maxLength(230),Validators.maxLength(230)]]
     });
    }
 
