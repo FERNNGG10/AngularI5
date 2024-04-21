@@ -4,6 +4,7 @@ export const environment = {
     UrlPlants:'http://18.227.105.11:8000/api/v1/plants',
     UrlSensors:'http://18.227.105.11:8000/api/v1/sensors',
     UrlMongo:'http://18.227.105.11:8000/api/v1/websocket',
+    UrlRoles:'http://18.227.105.11:8000/api/v1/roles',
     production:true
 
     // UrlAuth: 'http://127.0.0.1:8000/api/auth',

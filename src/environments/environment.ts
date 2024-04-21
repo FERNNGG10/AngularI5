@@ -3,6 +3,7 @@ export const environment = {
     UrlUsers:'http://18.227.105.11:8000/api/v1/users',
     UrlPlants:'http://18.227.105.11:8000/api/v1/plants',
     UrlSensors:'http://18.227.105.11:8000/api/v1/sensors',
+    UrlRoles:'http://18.227.105.11:8000/api/v1/roles',
     UrlMongo:'http://18.227.105.11:8000/api/v1/websocket',
     production:true
 

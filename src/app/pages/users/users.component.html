@@ -57,11 +57,11 @@
                                             <td>{{user.email}}</td>
                                             <td>{{user.status == 1 ? 'Activo' : 'Inactivo'}}</td>
                                             <td>
-                                                <button class="btn btn-warning" type="button" data-bs-toggle="modal"
+                                                <!-- <button class="btn btn-warning" type="button" data-bs-toggle="modal"
                                                     data-bs-target="#putUser"
                                                     (click)="editModal(user.id, user.name, user.email, user.status, user.rol_id)">
                                                     <i class="bi bi-pencil-fill"></i>
-                                                </button>
+                                                </button> -->
                                                 <button class="btn btn-danger" type="button" data-bs-toggle="modal"
                                                     data-bs-target="#deleteUser" (click)="deleteModal(user.id)">
                                                     <i class="bi bi-trash-fill"></i>
@@ -138,7 +138,9 @@
             <!-- Rol ID -->
             <div class="mb-3">
                 <label for="rol_id" class="form-label">Rol ID</label>
-                <input type="number" class="form-control" id="rol_id" name="rol_id" formControlName="rol_id" placeholder="Rol ID" required>
+                <select class="form-select" id="rol_id" name="rol_id" formControlName="rol_id" required="">
+                    <option *ngFor="let rol of roles.data" [value]="rol.id">{{rol.rol}}</option>
+                </select>
                 <div class="text-danger" *ngIf="PostUserForm.controls['rol_id'].invalid && (PostUserForm.controls['rol_id'].dirty || PostUserForm.controls['rol_id'].touched)">
                     <div *ngIf="PostUserForm.controls['rol_id'].errors?.['required']">El Rol ID es requerido</div>
                     <div *ngIf="PostUserForm.controls['rol_id'].errors?.['pattern']">El Rol ID debe ser un número</div>
@@ -154,9 +156,9 @@
 
 
 
-    <app-modal [modalId]="'putUser'" [modalTitle]="'Editar usuario'">
+    <!-- <app-modal [modalId]="'putUser'" [modalTitle]="'Editar usuario'">
         <form [formGroup]="UpdateUserForm" (ngSubmit)="updateUser()">
-            <!-- Name -->
+        
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="name" name="name" formControlName="name" placeholder="Nombre" required>
@@ -166,7 +168,7 @@
                     <div *ngIf="UpdateUserForm.controls['name'].errors?.['maxlength']">El nombre no puede tener más de 30 caracteres</div>
                 </div>
             </div>
-            <!-- Email -->
+   
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="Email" required>
@@ -176,7 +178,7 @@
                     <div *ngIf="UpdateUserForm.controls['email'].errors?.['pattern']">El correo electrónico debe seguir el patrón especificado</div>
                 </div>
             </div>
-            <!-- Password -->
+        
             <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <input type="password" class="form-control" id="password" name="password" formControlName="password" placeholder="Contraseña" required>
@@ -186,7 +188,7 @@
                     <div *ngIf="UpdateUserForm.controls['password'].errors?.['pattern']">La contraseña debe seguir el patrón especificado</div>
                 </div>
             </div>
-            <!-- Status -->
+       
             <div class="mb-3">
                 <label for="status" class="form-label">Status</label>
                 <select class="form-select" id="status" name="status" formControlName="status" required>
@@ -198,7 +200,7 @@
                     <div *ngIf="UpdateUserForm.controls['status'].errors?.['pattern']">El status debe ser 0 o 1</div>
                 </div>
             </div>
-            <!-- Rol ID -->
+         
             <div class="mb-3">
                 <label for="rol_id" class="form-label">Rol ID</label>
                 <input type="number" class="form-control" id="rol_id" name="rol_id" formControlName="rol_id" placeholder="Rol ID" required>
@@ -207,8 +209,8 @@
                     <div *ngIf="UpdateUserForm.controls['rol_id'].errors?.['pattern']">El Rol ID debe ser un número</div>
                 </div>
             </div>
-            <!-- ... -->
+        
             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="UpdateUserForm.invalid">Editar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         </form>
-    </app-modal>
+    </app-modal> -->
