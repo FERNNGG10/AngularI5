@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit{
       email: [this.userData.email, [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
       password: [this.userData.password, [Validators.required, Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9 ]*$/),Validators.maxLength(230)]],
       status: [this.userData.status, [Validators.required, Validators.pattern(/^[0-1]{1}$/)]],
-      rol_id: [this.userData.rol_id, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
+      rol_id: [1, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
     });
 
     // this.UpdateUserForm = this.formBuilde.group({

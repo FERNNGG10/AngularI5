@@ -138,7 +138,7 @@
             <!-- Rol ID -->
             <div class="mb-3">
                 <label for="rol_id" class="form-label">Rol ID</label>
-                <select class="form-select" id="rol_id" name="rol_id" formControlName="rol_id" required="">
+                <select class="form-select" id="rol_id" name="rol_id" formControlName="rol_id" required>
                     <option *ngFor="let rol of roles.data" [value]="rol.id">{{rol.rol}}</option>
                 </select>
                 <div class="text-danger" *ngIf="PostUserForm.controls['rol_id'].invalid && (PostUserForm.controls['rol_id'].dirty || PostUserForm.controls['rol_id'].touched)">
