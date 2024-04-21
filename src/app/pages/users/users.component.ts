@@ -8,6 +8,8 @@ import { UsersService } from '../../services/users.service';
 import { UserDataInterface } from '../../interfaces/UserData.interface';
 import { RolesService } from '../../services/roles.service';
 import { RolesIndexInterface } from '../../interfaces/RolesIndex.interface';
+import { UserShowInterface } from '../../interfaces/UserShow.Interface';
+import { UserUpdateInterface } from '../../interfaces/UserUpdate.Interface';
 
 @Component({
   selector: 'app-users',
@@ -20,12 +22,14 @@ export class UsersComponent implements OnInit{
   users: UsersIndexInterface = {data: []};
   userfilter: string = 'all';
   userData:UserDataInterface={name:'',email:'',password:'',password_confirmation:'',status:0,rol_id:0};
-  //userDataUpdate:UserDataInterface={name:'',email:'',password:'',status:0,rol_id:0};
+  usershow:UserShowInterface={id:0,name:'',email:'',rol_id:0,status:0};
+  userUpdate:UserUpdateInterface={name:'',email:'',password:'',status:0,rol_id:0};
+
   roles:RolesIndexInterface = {data:[]};
   PostUserForm:FormGroup;
   msg=''
 
-  //UpdateUserForm:FormGroup;
+  UpdateUserForm:FormGroup;
   id:number=0;
   errrorV=false;
   errors = {name:'',email:'',password:'',status:'',rol_id:''}
@@ -40,13 +44,13 @@ export class UsersComponent implements OnInit{
       rol_id: [1, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
     });
 
-    // this.UpdateUserForm = this.formBuilde.group({
-    //   name: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
-    //   email: ['', [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-    //   password: ['', [Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9 ]*$/),Validators.maxLength(230)]],
-    //   status: [0, [Validators.required, Validators.pattern(/^[0-1]{1}$/)]],
-    //   rol_id: [0, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
-    // });
+    this.UpdateUserForm = this.formBuilde.group({
+      name: [this.userUpdate.name, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      email: [this.userUpdate.email, [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      password: [this.userUpdate.password, [Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9 ]*$/),Validators.maxLength(230)]],
+      status: [this.userUpdate.status, [Validators.required, Validators.pattern(/^[0-1]{1}$/)]],
+      rol_id: [this.userUpdate.rol_id, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
+    });
    }
 
   ngOnInit(): void {
@@ -104,15 +108,7 @@ export class UsersComponent implements OnInit{
       console.log(error);
     });
   }
-  // editModal(id: number,name:string,email:string,status:number,rol_id:number) {
-  //   id = this.id;
-  //   this.UpdateUserForm.setValue({name:name,email:email,status:status,rol_id:rol_id});
-  //   console.log(this.UpdateUserForm.value);
-  // }
-  // closeModal() {
-  //   this.id = 0;
-  //   this.UpdateUserForm.reset();
-  // }
+
 
   deleteUser() {
     this.userService.delete(this.id).subscribe((response) => {
@@ -122,28 +118,24 @@ export class UsersComponent implements OnInit{
     });
   }
 
-  // updateUser(){
-  //   if(this.UpdateUserForm.valid){
-  //     this.userDataUpdate = this.UpdateUserForm.value;
-  //     this.userService.updateUser(this.id,this.userDataUpdate).subscribe((response)=>{
-  //       this.getUsers();
-  //       this.UpdateUserForm.reset();
-  //     },(error)=>{
-  //       console.log(error);
-  //       this.errors.password = error.error.errors.password
-  //       this.errors.email = error.error.errors.email
-  //       this.errors.name = error.error.errors.name
-  //       this.errors.status = error.error.errors.status
-  //       this.errors.rol_id = error.error.errors.rol_id
-  //       setTimeout(() => {
-  //         this.errors = {name:'',email:'',password:'',status:'',rol_id:''};
-  //       }, 3000);
-  //     });
-  //   }
-  // }
+  editModal(id: number) {
+    this.id = id;
+    console.log(this.id);
+    this.userService.getUser(this.id).subscribe((response)=>{
+      this.usershow = response;
+      this.userUpdate = {name:this.usershow.name,email:this.usershow.email,password:'',status:this.usershow.status,rol_id:this.usershow.rol_id};
+      console.log(this.usershow);
+    },(error)=>{
+      console.log(error);
+    } );
+  }
 
-
-
+  closemodal(){
+    this.id = 0;
+    console.log(this.id);
+    this.usershow = {id:0,name:'',email:'',rol_id:0,status:0};
+    this.userUpdate = {name:'',email:'',password:'',status:0,rol_id:0};
+  }
   
   
 }

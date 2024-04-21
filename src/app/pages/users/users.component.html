@@ -62,15 +62,22 @@
                                             <td>{{user.email}}</td>
                                             <td>{{user.status == 1 ? 'Activo' : 'Inactivo'}}</td>
                                             <td>
-                                                <!-- <button class="btn btn-warning" type="button" data-bs-toggle="modal"
+                                                <button class="btn btn-warning" type="button" data-bs-toggle="modal"
                                                     data-bs-target="#putUser"
-                                                    (click)="editModal(user.id, user.name, user.email, user.status, user.rol_id)">
+                                                    (click)="editModal(user.id)">
                                                     <i class="bi bi-pencil-fill"></i>
-                                                </button> -->
-                                                <button class="btn btn-danger" type="button" data-bs-toggle="modal"
-                                                    data-bs-target="#deleteUser" (click)="deleteModal(user.id)">
-                                                    <i class="bi bi-trash-fill"></i>
                                                 </button>
+                                              @if(user.status == 0){
+                                                <button class="btn btn-danger" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#deleteUser" (click)="deleteModal(user.id)">
+                                                <i class="bi bi-check"></i>
+                                                </button>
+                                              }@else {
+                                                <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                                                data-bs-target="#Activarusuario" (click)="deleteModal(user.id)">
+                                                <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                              }
                                             </td>
                                         </ng-container>
                                     </tr>
@@ -85,15 +92,17 @@
 
 
 
+    <app-modal [modalId]="'Activarusuario'" [modalTitle]="'Activar usuario'">
+        <p>¿Estás seguro de activar al usuario?</p>
+        <button class="btn btn-success" type="button" (click)="deleteUser()" data-bs-dismiss="modal">Eliminar</button>
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" (click)="closemodal()">Cancelar</button>
+    </app-modal>
+
     <app-modal [modalId]="'deleteUser'" [modalTitle]="'Eliminar usuario'">
         <p>¿Estás seguro de desactivar al usuario?</p>
         <button class="btn btn-danger" type="button" (click)="deleteUser()" data-bs-dismiss="modal">Eliminar</button>
-        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" (click)="closemodal()">Cancelar</button>
     </app-modal>
-
-
-
-
 
     <app-modal [modalId]="'postUser'" [modalTitle]="'Agregar usuario'">
         <form [formGroup]="PostUserForm" (ngSubmit)="postUser()">
@@ -171,8 +180,8 @@
 
 
 
-    <!-- <app-modal [modalId]="'putUser'" [modalTitle]="'Editar usuario'">
-        <form [formGroup]="UpdateUserForm" (ngSubmit)="updateUser()">
+    <app-modal [modalId]="'putUser'" [modalTitle]="'Editar usuario'">
+        <form [formGroup]="UpdateUserForm">
         
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
@@ -218,7 +227,9 @@
          
             <div class="mb-3">
                 <label for="rol_id" class="form-label">Rol ID</label>
-                <input type="number" class="form-control" id="rol_id" name="rol_id" formControlName="rol_id" placeholder="Rol ID" required>
+                <select class="form-select" id="rol_id" name="rol_id" formControlName="rol_id" required>
+                    <option *ngFor="let rol of roles.data" [value]="rol.id">{{rol.rol}}</option>
+                </select>
                 <div class="text-danger" *ngIf="UpdateUserForm.controls['rol_id'].invalid && (UpdateUserForm.controls['rol_id'].dirty || UpdateUserForm.controls['rol_id'].touched)">
                     <div *ngIf="UpdateUserForm.controls['rol_id'].errors?.['required']">El Rol ID es requerido</div>
                     <div *ngIf="UpdateUserForm.controls['rol_id'].errors?.['pattern']">El Rol ID debe ser un número</div>
@@ -228,4 +239,4 @@
             <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="UpdateUserForm.invalid">Editar</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         </form>
-    </app-modal> -->
+    </app-modal>
