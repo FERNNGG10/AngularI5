@@ -22,13 +22,13 @@ export class UsersComponent implements OnInit{
   users: UsersIndexInterface = {data: []};
   userfilter: string = 'all';
   userData:UserDataInterface={name:'',email:'',password:'',password_confirmation:'',status:0,rol_id:0};
-  usershow:UserShowInterface={id:0,name:'',email:'',rol_id:0,status:0};
+  usershow:UserShowInterface={data:{id:0,name:'',email:'',rol_id:0,status:0,password:''}};
   userUpdate:UserUpdateInterface={name:'',email:'',password:'',status:0,rol_id:0};
 
   roles:RolesIndexInterface = {data:[]};
   PostUserForm:FormGroup;
   msg=''
-
+  UpdateUserForm:FormGroup;
   id:number=0;
   errrorV=false;
   errors = {name:'',email:'',password:'',status:'',rol_id:''}
@@ -42,9 +42,39 @@ export class UsersComponent implements OnInit{
       status: [this.userData.status, [Validators.required, Validators.pattern(/^[0-1]{1}$/)]],
       rol_id: [1, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
     });
+    
+    this.UpdateUserForm = this.formBuilde.group({
+      name: [this.userUpdate.name, [Validators.required, Validators.minLength(3), Validators.maxLength(30)]],
+      email: [this.userUpdate.email, [Validators.required, Validators.email, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      password: [this.userUpdate.password, [ Validators.minLength(8), Validators.pattern(/^[a-zA-Z0-9 ]*$/),Validators.maxLength(230)]],
+      status: [this.userUpdate.status, [Validators.required, Validators.pattern(/^[0-1]{1}$/)]],
+      rol_id: [this.userUpdate.rol_id, [Validators.required, Validators.pattern(/^[0-9]{1}$/)]]
+    });
 
    
    }
+
+   update(){
+      this.userService.updateUser(this.id,this.UpdateUserForm.value).subscribe((response)=>{
+        console.log(response);
+        this.getUsers();
+        this.id = 0;
+      },(error)=>{
+        console.log(error);
+        console.log(error);
+        this.errrorV=true;
+        this.errors.password = error.error.errors.password
+        this.errors.email = error.error.errors.email
+        this.errors.name = error.error.errors.name
+        this.errors.status = error.error.errors.status
+        this.errors.rol_id = error.error.errors.rol_id
+        setTimeout(() => {
+          this.errrorV=false
+          this.errors = {name:'',email:'',password:'',status:'',rol_id:''};
+        }, 3000);
+      });
+    
+  }
 
   ngOnInit(): void {
     this.getUsers();
@@ -105,19 +135,28 @@ export class UsersComponent implements OnInit{
   deleteUser() {
     this.userService.delete(this.id).subscribe((response) => {
       this.getUsers();
+      this.msg = "Peticion exitosa"
+      setTimeout(() => {
+        this.msg = '';
+      }, 3000);
     }, (error) => {
       console.log(error);
     });
   }
 
+
+
   editModal(id:number){
     this.id = id;
     this.userService.getUser(id).subscribe((response)=>{
-      
-      this.userUpdate.name = response.name;
-      this.userUpdate.email = response.email;
-      this.userUpdate.status = response.status;
-      this.userUpdate.rol_id = response.rol_id;
+      console.log(response)
+      this.userUpdate = response.data;
+      this.UpdateUserForm.patchValue({
+        name: this.userUpdate.name,
+        email: this.userUpdate.email,
+        status: this.userUpdate.status,
+        rol_id: this.userUpdate.rol_id
+      });
       console.log(this.userUpdate);
     },(error)=>{
       console.log(error);

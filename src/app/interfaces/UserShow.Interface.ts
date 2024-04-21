@@ -1,8 +1,10 @@
 export interface UserShowInterface {
-    id: number
-    name: string
-    email: string
-    rol_id: number
-    status: number
-
+    data: {
+        id: number;
+        name: string;
+        email: string;
+        rol_id: number;
+        status: number;
+        password: string;
+      };
 }
