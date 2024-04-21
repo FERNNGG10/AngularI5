@@ -67,7 +67,7 @@
                                                     (click)="editModal(user.id)">
                                                     <i class="bi bi-pencil-fill"></i>
                                                 </button>
-                                              @if(user.status == 0){
+                                              @if(user.status == 1){
                                                 <button class="btn btn-danger" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#deleteUser" (click)="deleteModal(user.id)">
                                                 <i class="bi bi-check"></i>
@@ -94,13 +94,13 @@
 
     <app-modal [modalId]="'Activarusuario'" [modalTitle]="'Activar usuario'">
         <p>¿Estás seguro de activar al usuario?</p>
-        <button class="btn btn-success" type="button" (click)="deleteUser()" data-bs-dismiss="modal">Eliminar</button>
+        <button class="btn btn-success" type="button" (click)="deleteUser()" data-bs-dismiss="modal">Activar</button>
         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" (click)="closemodal()">Cancelar</button>
     </app-modal>
 
-    <app-modal [modalId]="'deleteUser'" [modalTitle]="'Eliminar usuario'">
+    <app-modal [modalId]="'deleteUser'" [modalTitle]="'Desactivar usuario'">
         <p>¿Estás seguro de desactivar al usuario?</p>
-        <button class="btn btn-danger" type="button" (click)="deleteUser()" data-bs-dismiss="modal">Eliminar</button>
+        <button class="btn btn-danger" type="button" (click)="deleteUser()" data-bs-dismiss="modal">Desactivar</button>
         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal" (click)="closemodal()">Cancelar</button>
     </app-modal>
 

@@ -125,9 +125,16 @@ export class UsersComponent implements OnInit{
       this.usershow = response;
       this.userUpdate = {name:this.usershow.name,email:this.usershow.email,password:'',status:this.usershow.status,rol_id:this.usershow.rol_id};
       console.log(this.usershow);
+      this.UpdateUserForm.patchValue({
+        name: this.userUpdate.name,
+        email: this.userUpdate.email,
+        password: this.userUpdate.password,
+        status: this.userUpdate.status,
+        rol_id: this.userUpdate.rol_id
+      });
     },(error)=>{
       console.log(error);
-    } );
+    });
   }
 
   closemodal(){
