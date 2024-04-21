@@ -23,9 +23,11 @@ export class UsersComponent implements OnInit{
   userDataUpdate:UserDataInterface={name:'',email:'',password:'',status:0,rol_id:0};
   roles:RolesIndexInterface = {data:[]};
   PostUserForm:FormGroup;
+  msg=''
 
   //UpdateUserForm:FormGroup;
   id:number=0;
+  errrorV=false;
   errors = {name:'',email:'',password:'',status:'',rol_id:''}
   constructor(private userService:UsersService, private formBuilde:FormBuilder, private rolesSerivce:RolesService) {
 
@@ -64,15 +66,21 @@ export class UsersComponent implements OnInit{
       this.userData = this.PostUserForm.value;
       this.userService.postUser(this.userData).subscribe((response)=>{
         this.getUsers();
+        this.msg = response.msg;
+        setTimeout(() => {
+          this.msg = '';
+        }, 3000);
         this.PostUserForm.reset();
       },(error)=>{
         console.log(error);
+        this.errrorV=true;
         this.errors.password = error.error.errors.password
         this.errors.email = error.error.errors.email
         this.errors.name = error.error.errors.name
         this.errors.status = error.error.errors.status
         this.errors.rol_id = error.error.errors.rol_id
         setTimeout(() => {
+          this.errrorV=false
           this.errors = {name:'',email:'',password:'',status:'',rol_id:''};
         }, 3000);
       });
