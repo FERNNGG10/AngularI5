@@ -112,12 +112,12 @@ export class UsersComponent implements OnInit{
 
   editModal(id:number){
     this.id = id;
-    this.userService.getUser(this.id).subscribe((response)=>{
-      this.usershow = response;
-      this.userUpdate.name = this.usershow.name;
-      this.userUpdate.email = this.usershow.email;
-      this.userUpdate.status = this.usershow.status;
-      this.userUpdate.rol_id = this.usershow.rol_id;
+    this.userService.getUser(id).subscribe((response)=>{
+      
+      this.userUpdate.name = response.name;
+      this.userUpdate.email = response.email;
+      this.userUpdate.status = response.status;
+      this.userUpdate.rol_id = response.rol_id;
       console.log(this.userUpdate);
     },(error)=>{
       console.log(error);
