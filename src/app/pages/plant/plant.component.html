@@ -15,7 +15,7 @@
                     </h2>
                 </div>
                 <div class="card-footer text-center">
-                    <button class="btn add" type="button" (click)="regar()" [disabled]="!buttonActive">Regar</button>
+                    <button *ngIf="plantShow?.data?.status == 1" class="btn add" type="button" (click)="regar()" [disabled]="!buttonActive">Regar</button>
                     <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#putPlant" (click)="editModal(plantShow?.data?.id, plantShow?.data?.plant, plantShow?.data?.status)"><i class="bi bi-pencil-fill"></i></button>
                     <button *ngIf="plantShow?.data?.status == 1" class="btn btn-danger" type="button" data-bs-toggle="modal" data-bs-target="#deletePlant" (click)="openModal(plantShow?.data?.id)">Desactivar</button>
                     <button *ngIf="plantShow?.data?.status != 1" class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#deletePlant" (click)="openModal(plantShow?.data?.id)">Activar</button>
