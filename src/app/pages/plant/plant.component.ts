@@ -29,7 +29,7 @@ export class PlantComponent implements OnInit{
   img= '';
   msg=''
   buttonActive = true;
-  constructor(private plantService:PlantsService,private router:Router,private formBuilder:FormBuilder,private mongo:SocketService, private authservice:AuthService) {
+  constructor(private plantService:PlantsService,private router:Router,private formBuilder:FormBuilder,private mongo:SocketService) {
     this.putPlantForm = this.formBuilder.group({
       plant: [this.putPlant.plant, [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9 ]+$/)]],
       status: [this.putPlant.status, [Validators.required, Validators.min(0), Validators.max(1)]]
@@ -68,26 +68,12 @@ export class PlantComponent implements OnInit{
 
   openModal(id: string) {
     this.id = parseInt(id);
-    this.authservice.isauth().subscribe((response)=>{
-      console.log(response);
-      if(response.status == 200){
-      }else{
-        this.router.navigate(['/login']);
-      }
-    })
   }
 
   editModal(id: string, plant: string, status: number) {
     this.id = parseInt(id);
     this.putPlant.plant = plant;
     this.putPlant.status = status;
-    this.authservice.isauth().subscribe((response)=>{
-      console.log(response);
-      if(response.status == 200){
-      }else{
-        this.router.navigate(['/login']);
-      }
-    })
   }
 
   deletePlant(id: number) {
@@ -120,9 +106,6 @@ export class PlantComponent implements OnInit{
       setTimeout(() => {
         this.msg = '';
       }, 3000);
-    },(error)=>{
-      console.log(error);
-      this.router.navigate(['/login']);
     });
     this.buttonActive = false;
     setTimeout(() => {
