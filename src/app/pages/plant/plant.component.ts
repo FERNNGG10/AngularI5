@@ -81,6 +81,13 @@ export class PlantComponent implements OnInit{
     this.id = parseInt(id);
     this.putPlant.plant = plant;
     this.putPlant.status = status;
+    this.authservice.isauth().subscribe((response)=>{
+      console.log(response);
+      if(response.status == 200){
+      }else{
+        this.router.navigate(['/login']);
+      }
+    })
   }
 
   deletePlant(id: number) {
@@ -113,6 +120,9 @@ export class PlantComponent implements OnInit{
       setTimeout(() => {
         this.msg = '';
       }, 3000);
+    },(error)=>{
+      console.log(error);
+      this.router.navigate(['/login']);
     });
     this.buttonActive = false;
     setTimeout(() => {
