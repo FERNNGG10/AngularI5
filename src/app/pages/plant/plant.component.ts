@@ -10,7 +10,6 @@ import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
 import Socket from 'pusher-js/types/src/core/socket';
 import { SocketService } from '../../services/socket.service';
-import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-plant',
@@ -46,7 +45,6 @@ export class PlantComponent implements OnInit{
       },(error)=>{
         console.log(error);
       });
-
       this.mongo.MongoData().subscribe((response)=>{
         console.log(response);
         this.data_sensor = response;
@@ -58,9 +56,6 @@ export class PlantComponent implements OnInit{
     this.img = this.getImg(); 
     
   }
-
-
-
   getImg(){
     const numero = Math.floor(Math.random() * 5) + 1;
     return `../../../assets/imagenes/plantsIcons/${numero}.jpg`;
@@ -75,7 +70,6 @@ export class PlantComponent implements OnInit{
     this.putPlant.plant = plant;
     this.putPlant.status = status;
   }
-
   deletePlant(id: number) {
     this.plantService.eliminarPlants(id).subscribe(res => {
       this.ngOnInit();
@@ -94,11 +88,9 @@ export class PlantComponent implements OnInit{
       setTimeout(() => {
         this.msg = '';
       }, 3000);
-
       this.ngOnInit();
     });
   }
-
   regar() {
     this.mongo.BombEvent().subscribe((response) => {
       console.log(response);
@@ -112,7 +104,6 @@ export class PlantComponent implements OnInit{
       this.buttonActive = true;
     }, 15000);
   }
-
   websocket(){
     
     (window as any).Pusher = Pusher;
@@ -142,10 +133,8 @@ export class PlantComponent implements OnInit{
       this.echo.disconnect();
     }
   }
-
   ngOnDestroy(): void {
       this.closewebsocket();
   }
-
  
 }
