@@ -14,6 +14,7 @@ export const routes: Routes = [
         {path: 'users',loadComponent:()=>import('./pages/users/users.component').then(c => c.UsersComponent),canActivate:[tokenGuard,AdminGuard,activeGuard]},  
         {path: 'about',loadComponent:()=>import('./pages/about/about.component').then(c => c.AboutComponent),canActivate:[tokenGuard,activeGuard]},
         {path: 'perfil',loadComponent:()=>import('./pages/profile/profile.component').then(c => c.ProfileComponent),canActivate:[tokenGuard,activeGuard]},
+        {path: 'historial',loadComponent:()=>import('./pages/historial/historial.component').then(c => c.HistorialComponent),canActivate:[tokenGuard,activeGuard]},
         
     ]},
     {path:'login',loadComponent:()=>import('./pages/login/login.component').then(c => c.LoginComponent),canActivate:[IsToken]},

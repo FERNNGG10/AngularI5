@@ -5,6 +5,7 @@ import Pusher from 'pusher-js';
 import { MongoInterface } from '../interfaces/Mongo.Interface';
 import { environment } from '../../environments/environment.development';
 import { Observable } from 'rxjs';
+import { SensorFilter } from '../interfaces/SensorFilter.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -48,5 +49,37 @@ export class SocketService {
 
   getEcho(){
     return this.echo;
+  }
+
+  getAgua(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/agua`);
+  }
+  
+  getHumedad(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/humedad`);
+  }
+  
+  getLuz(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/luz`);
+  }
+  
+  getMovimiento(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/movimiento`);
+  }
+  
+  getTemperatura(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/temperatura`);
+  }
+  
+  getVibracion(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/vibracion`);
+  }
+  
+  getLluvia(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/lluvia`);
+  }
+  
+  getSuelo(){
+    return this.http.get<SensorFilter>(`${environment.UrlMongo}/suelo`);
   }
 }
