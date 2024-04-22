@@ -10,6 +10,7 @@ import Pusher from 'pusher-js';
 import Echo from 'laravel-echo';
 import Socket from 'pusher-js/types/src/core/socket';
 import { SocketService } from '../../services/socket.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-plant',
@@ -28,7 +29,7 @@ export class PlantComponent implements OnInit{
   img= '';
   msg=''
   buttonActive = true;
-  constructor(private plantService:PlantsService,private router:Router,private formBuilder:FormBuilder,private mongo:SocketService) {
+  constructor(private plantService:PlantsService,private router:Router,private formBuilder:FormBuilder,private mongo:SocketService, private authservice:AuthService) {
     this.putPlantForm = this.formBuilder.group({
       plant: [this.putPlant.plant, [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9 ]+$/)]],
       status: [this.putPlant.status, [Validators.required, Validators.min(0), Validators.max(1)]]
@@ -67,6 +68,13 @@ export class PlantComponent implements OnInit{
 
   openModal(id: string) {
     this.id = parseInt(id);
+    this.authservice.isauth().subscribe((response)=>{
+      console.log(response);
+      if(response.status == 200){
+      }else{
+        this.router.navigate(['/login']);
+      }
+    })
   }
 
   editModal(id: string, plant: string, status: number) {
